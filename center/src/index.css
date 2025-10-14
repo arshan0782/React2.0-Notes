@@ -1,0 +1,54 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body,
+html {
+  height: 100%;
+  width: 100%;
+}
+/* First Way */
+.parent {
+  height: 100vh;
+  width: 100vw;
+  background-color: #111;
+}
+.child {
+  height: 200px;
+  width: 200px;
+  background-color: #ff3f6c;
+  
+
+}
+
+/* 2nd Way */
+
+/* .parent {
+  height: 100vh;
+  width: 100vw;
+  background-color: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.child {
+  height: 200px;
+  width: 200px;
+  background-color: #ff3f6c;
+} */
+
+/* 3rd Way */
+
+.parent {
+  height: 100vh;
+  width: 100vw;
+  background-color: #111;
+  display: grid;
+  place-items: center;
+}
+.child {
+  height: 200px;
+  width: 200px;
+  background-color: #ff3f6c;
+}

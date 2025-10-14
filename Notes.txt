@@ -1,0 +1,337 @@
+Introduction to React
+
+👉 What is React?
+React is a JavaScript library for building user interfaces — mainly for single-page applications (SPAs).
+Developed by Facebook (Meta).
+
+npm create vite@latest myapp --template react
+cd myapp
+npm install
+npm run dev
+
+Functional Component
+function Welcome() {
+  return <h2>Hello from Functional Component</h2>;
+}
+export default Welcome;
+
+Class Component
+import React, { Component } from 'react';
+class Welcome extends Component {
+  render() {
+    return <h2>Hello from Class Component</h2>;
+  }
+}
+export default Welcome;
+
+
+Props (Properties)
+Used to pass data between components.
+
+
+function Greeting(props) {
+  return <h3>Hello, {props.name}</h3>;
+}
+
+Prop Drilling in React
+Prop drilling is the process of passing data from a parent component to deeply nested child components through multiple layers of intermediate components, even if those components don’t need the data themselves.
+
+State
+Used to store dynamic data inside components.
+
+import { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+ 
+  return (
+    <>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>+</button>
+    </>
+  );
+}
+
+React Hooks
+Hooks allow functional components to use state and lifecycle methods.
+
+Hook	        Purpose
+useState	Manage component state
+useEffect	Handle side effects (API calls, DOM updates)
+useContext	Manage global context
+useRef	        Access DOM elements
+useMemo	        Optimize expensive calculations
+useCallback	Memoize functions
+useReducer	Manage complex state logic
+
+useEffect
+import { useState, useEffect } from 'react';
+
+function Timer() {
+  const [time, setTime] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => setTime(t => t + 1), 1000);
+    return () => clearInterval(timer); // cleanup
+  }, []);
+
+  return <h3>Time: {time}s</h3>;
+}
+
+Conditional Rendering
+function User({ loggedIn }) {
+  return (
+    <>
+      {loggedIn ? <h3>Welcome Back!</h3> : <h3>Please Log In</h3>}
+    </>
+  );
+}
+
+Lists and Keys
+function TodoList() {
+  const todos = ['Learn React', 'Build Projects', 'Get Job'];
+  return (
+    <ul>
+      {todos.map((todo, index) => <li key={index}>{todo}</li>)}
+    </ul>
+  );
+}
+
+Forms and Input Handling
+function Form() {
+  const [name, setName] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert(`Submitted: ${name}`);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input value={name} onChange={(e) => setName(e.target.value)} />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+Fetching API Data
+import { useState, useEffect } from 'react';
+
+function Users() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fetch("localData.json")
+      .then(res => res.json())
+      .then(data => setUsers(data));
+  }, []);
+
+  return (
+    <ul>
+      {users.map(user => <li key={user.id}>{user.name}</li>)}
+    </ul>
+  );
+}
+
+Using try-catch in Async Functions
+async function fetchUser() {
+  try {
+    const res = await fetch("/api/user");
+    const data = await res.json();
+    console.log(data);
+  } catch (err) {
+    console.error("Failed to fetch user:", err.message);
+  }
+}
+
+Always catch rejected promises
+Display fallback UI if needed
+Handling Asynchronous Errors (API / fetch / async-await)
+import { useState, useEffect } from "react";
+
+function Users() {
+  const [users, setUsers] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch("https://jsonplaceholder.typicode.com/userss"); // wrong URL
+        if (!res.ok) throw new Error("Network response not ok");
+        const data = await res.json();
+        setUsers(data);
+      } catch (err) {
+        setError(err.message);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  if (error) return <p>Error: {error}</p>;
+  return (
+    <ul>
+      {users.map((user) => (
+        <li key={user.id}>{user.name}</li>
+      ))}
+    </ul>
+  );
+}
+
+React Router (Navigation)
+
+Install:
+npm install react-router-dom
+
+Usage:
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+
+function Home() { return <h2>Home Page</h2>; }
+function About() { return <h2>About Page</h2>; }
+
+function App() {
+  return (
+    <BrowserRouter>
+      <nav>
+        <Link to="/">Home</Link> | <Link to="/about">About</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+Context API (Global State)
+import { createContext, useContext, useState } from "react";
+
+const ThemeContext = createContext();
+
+function App() {
+  const [theme, setTheme] = useState("light");
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <Child />
+    </ThemeContext.Provider>
+  );
+}
+
+function Child() {
+  const { theme, setTheme } = useContext(ThemeContext);
+  return (
+    <>
+      <h2>Current Theme: {theme}</h2>
+      <button onClick={() => setTheme("dark")}>Dark Mode</button>
+    </>
+  );
+}
+
+useReducer Hook
+import { useReducer } from "react";
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "INC": return state + 1;
+    case "DEC": return state - 1;
+    default: return state;
+  }
+};
+
+function Counter() {
+  const [count, dispatch] = useReducer(reducer, 0);
+  return (
+    <>
+      <h3>{count}</h3>
+      <button onClick={() => dispatch({ type: "INC" })}>+</button>
+      <button onClick={() => dispatch({ type: "DEC" })}>-</button>
+    </>
+  );
+}
+
+Custom Hooks
+function useFetch(url) {
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    fetch(url).then(res => res.json()).then(setData);
+  }, [url]);
+  return data;
+}
+
+function Users() {
+  const users = useFetch("https://jsonplaceholder.typicode.com/users");
+  return <pre>{JSON.stringify(users, null, 2)}</pre>;
+}
+The useRef()
+Hook is used to store a mutable reference (a value or a DOM element) that persists across re-renders without causing a component to re-render when updated.
+
+
+useState → re-renders when updated
+
+useRef → does not cause re-render
+
+🔹 Syntax
+const refContainer = useRef(initialValue);
+
+
+refContainer.current → stores the current value
+
+The value persists across re-renders
+
+: Accessing DOM Elements
+
+Let’s focus an input field when the button is clicked
+
+import { useRef } from "react";
+
+function InputFocus() {
+  const inputRef = useRef(null);
+
+  const handleFocus = () => {
+    inputRef.current.focus(); // directly access DOM element
+  };
+
+  return (
+    <div>
+      <input ref={inputRef} type="text" placeholder="Enter name" />
+      <button onClick={handleFocus}>Focus Input</button>
+    </div>
+  );
+}
+
+export default InputFocus;
+
+What is Destructuring?
+Destructuring means unpacking values from arrays or objects into individual variables.
+It helps you write cleaner, shorter, and more readable code.
+
+Array Destructuring
+const fruits = ["Apple", "Banana", "Mango"];
+const [first, second, third] = fruits;
+
+console.log(first);  // Apple
+console.log(second); // Banana
+console.log(third);  // Mango
+
+
+ Without destructuring:
+
+const first = fruits[0];
+const second = fruits[1];
+
+
+Object Destructuring
+const user = {
+  name: "Arshan",
+  age: 21,
+  country: "India"
+};
+
+const { name, age, country } = user;
+console.log(name); // Arshan
+console.log(age);  // 21
+
+
+Without destructuring:
+const name = user.name;
+const age = user.age;
