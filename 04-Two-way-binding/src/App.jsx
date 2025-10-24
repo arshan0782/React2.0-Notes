@@ -8,6 +8,7 @@ const App = () => {
     console.log("Form Submit by", name);
     setName("") 
     // setFirst(name)
+    
 
   };
   return (

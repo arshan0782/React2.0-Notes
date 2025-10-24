@@ -56,13 +56,13 @@ React Hooks
 Hooks allow functional components to use state and lifecycle methods.
 
 Hook	        Purpose
-useState	Manage component state
-useEffect	Handle side effects (API calls, DOM updates)
-useContext	Manage global context
+useState	    Manage component state
+useEffect	    Handle side effects (API calls, DOM updates)
+useContext	    Manage global context
 useRef	        Access DOM elements
 useMemo	        Optimize expensive calculations
-useCallback	Memoize functions
-useReducer	Manage complex state logic
+useCallback	    Memoize functions
+useReducer	    Manage complex state logic
 
 useEffect
 import { useState, useEffect } from 'react';
