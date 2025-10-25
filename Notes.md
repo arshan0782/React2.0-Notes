@@ -335,3 +335,62 @@ console.log(age);  // 21
 Without destructuring:
 const name = user.name;
 const age = user.age;
+
+
+
+What are Routes in React?
+
+👉 “Routes” mean different pages or views in a single-page app (SPA).
+React Router lets you switch between components without reloading the page.
+
+Example:
+
+/ → Home
+
+/about → About page
+
+/contact → Contact page
+
+🪜 Step 1 — Install React Router
+
+In your project folder:
+
+npm install react-router-dom
+
+🪜 Step 2 — Basic Setup
+✅ Example: Simple Navigation with 3 pages
+// App.jsx
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+
+function Home() {
+  return <h2>🏠 Home Page</h2>;
+}
+
+function About() {
+  return <h2>ℹ️ About Page</h2>;
+}
+
+function Contact() {
+  return <h2>📞 Contact Page</h2>;
+}
+
+function App() {
+  return (
+    <Router>
+      <nav style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+        <Link to="/contact">Contact</Link>
+      </nav>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
