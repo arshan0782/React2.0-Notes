@@ -11,7 +11,7 @@ const App = () => {
 
   return (
    <div>
-     <h1>Value of a is {num}</h1>
+     <h1 className='heading'>Value of a is {num}</h1>
     <button onClick={updateNum}> Increase</button>
     <button onClick={changeDec}> Decrease</button>
     <button onClick={()=> setNum(num * 2)}> Double</button>
