@@ -1,7 +1,12 @@
 import React from 'react'
+import { useParams } from 'react-router-dom';
 
 
 const ArshanDetails = () => {
+
+  const params = useParams() 
+
+console.log(params);
   return (
     <div className="details-container">
       <div className="card">
