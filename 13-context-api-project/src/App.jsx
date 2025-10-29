@@ -7,8 +7,11 @@ import TodoList from './componets/TodoList'
 const App = () => {
   return (
     <TodoProvider>
-      <TodoForm />
-      <TodoList />
+    <div className="app-container">
+        <h1 className="app-title">📝 Todo List</h1>
+        <TodoForm />
+        <TodoList />
+      </div>
     </TodoProvider> 
   )
 }
